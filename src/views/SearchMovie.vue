@@ -11,7 +11,7 @@
 	  	<input class="form-control" type="text" placeholder="Search" aria-label="Search">
 	</div>
 	<div>
-		<CardMovie v-for="(movie, index) in result_search_by_genre" :key="index" :movie="movie"></CardMovie>
+		<CardMovie v-for="(movie, index) in result_search_by_genre_sorted" :key="index" :movie="movie"></CardMovie>
 	</div>
 </div>
 </template>
@@ -30,6 +30,9 @@
 				list_genre: state => state.api.list_genre,
 				result_search_by_genre: state => state.api.result_search_by_genre
 			}),
+			result_search_by_genre_sorted: function() {
+				return this.sortByGenreNumber(this.result_search_by_genre)
+			}
 		},
 
 		mounted() {
@@ -37,9 +40,64 @@
 		},
 
 		methods: {
+
 			searchByGenre() {
 				this.$store.dispatch("api/getMovieListByGenre")
-			}
+			},
+
+			sortByGenreNumber(list) {
+				var listSelectedGenre = this.getListSelectedGenre()
+				if (list === []) {
+					return [];
+				}
+				list.forEach((movie, i) => {
+					movie.countMatchingId = 0;
+					movie.notInGenreIds = [];
+					listSelectedGenre.forEach((id, i) => {
+						if (movie.genre_ids.includes(id)) {
+							movie.countMatchingId++;
+						} else {
+							movie.notInGenreIds.push(id);
+							movie.notInGenreIds = this.matchIds(movie.notInGenreIds);
+						}
+					})
+				})
+				list.sort( (a, b) => {
+					if (a.countMatchingId < b.countMatchingId) {
+						return 1;
+					}
+					if (a.countMatchingId > b.countMatchingId) {
+						return -1;
+					}
+					return 0;
+				})
+				return list;
+			},
+
+			// Method to match the id from MovieDB with the one in list_genre
+			matchIds(list, list_genre) {
+				var isFound = false;
+				list.forEach((id, index_list) => {
+					isFound= false;
+					this.list_genre.forEach((genre, index_list_genre) => {
+						if (id === genre.id && !isFound) {
+							list[index_list] = index_list_genre;
+							isFound = true;
+						}
+					})
+				})
+				return list;
+			},
+
+			getListSelectedGenre() {
+				var listSelected = [];
+				this.list_genre.forEach(function (genre, i) {
+					if (genre.check) {
+						listSelected.push(genre.id);
+					}
+				})
+				return listSelected;
+			},
 		}
 	}
 </script>

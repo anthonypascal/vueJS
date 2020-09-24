@@ -41,9 +41,8 @@ export default ({
               list_id.push(state.list_genre[i].id)
           }
       }
-      axios.get(state.api_url + 'discover/movie?api_key=' + movieDB_api_key + '&with_genres=' + list_id.join(','))
-          .then(response => { state.result_search_by_genre = response.data.results })
-
+      axios.get(state.api_url + 'discover/movie?api_key=' + movieDB_api_key + '&with_genres=' + list_id.join('|'))
+          .then(response => {state.result_search_by_genre = response.data.results})
     }
   },
 
