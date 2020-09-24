@@ -11,16 +11,19 @@
 	  	<input class="form-control" type="text" placeholder="Search" aria-label="Search">
 	</div>
 	<div>
-		<div v-for="movie in result_search_by_genre">
-			<p>{{ movie.title }}</p>
-		</div>
+		<CardMovie v-for="(movie, index) in result_search_by_genre" :key="index" :movie="movie"></CardMovie>
 	</div>
 </div>
 </template>
 
 <script>
 	import { mapState } from 'vuex'
+	import CardMovie from "@/components/CardMovie";
 	export default {
+
+		components: {
+			CardMovie
+		},
 
 		computed: {
 			...mapState({
