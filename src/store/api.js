@@ -37,15 +37,12 @@ export default ({
     getMovieByGenre({commit, state}) {
       var list_id = []
       for(var i = 0; i < state.list_genre.length; i++) {
-        if (state.list_genre[i].check) {
-          list_id.push(state.list_genre[i].id)
-        }
+          if (state.list_genre[i].check) {
+              list_id.push(state.list_genre[i].id)
+          }
       }
-      console.log(list_id)
       axios.get(state.api_url + 'discover/movie?api_key=' + movieDB_api_key + '&with_genres=' + list_id.join(','))
-          .then(response => {
-            console.log(response.data)
-            state.result_search_by_genre = response.data })
+          .then(response => { state.result_search_by_genre = response.data.results })
 
     }
   },
