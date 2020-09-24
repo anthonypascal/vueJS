@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: 'MovieDetail', params: { movie }}">
+    <router-link :to="{name: 'MovieDetail', params: { movie }} " style="text-decoration: none;">
         <div class="card" style="width: 18rem;">
         <img class="card-img-top" :src="img_url + movie.poster_path" alt="Card image cap">
         <div class="card-body">
