@@ -22,6 +22,12 @@ const routes = [
     path: '/searchmovie',
     name: 'SearchMovie',
     component: () => import(/* webpackChunkName: "about" */ '../views/SearchMovie.vue')
+  },
+  {
+    path: '/searchmovie/moviedetail',
+    name: 'MovieDetail',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MovieDetail.vue'),
+    props: true
 }
 ]
 

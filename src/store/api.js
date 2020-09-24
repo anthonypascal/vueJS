@@ -9,7 +9,8 @@ export default ({
     img_url: 'http://image.tmdb.org/t/p/w500/',
     movieDB_api_key: movieDB_api_key,
     list_genre: [],
-    result_search_by_genre: []
+    result_search_by_genre: [],
+    clicked_movie: {}
   },
 
   mutations: {

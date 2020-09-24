@@ -18,7 +18,7 @@
 
 <script>
 	import { mapState } from 'vuex'
-	import CardMovie from "@/components/CardMovie";
+	import CardMovie from "@/components/CardMovie"
 	export default {
 
 		components: {

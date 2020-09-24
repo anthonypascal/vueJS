@@ -1,10 +1,12 @@
 <template>
-    <div class="card" style="width: 18rem;">
+    <router-link :to="{name: 'MovieDetail', params: { movie }}">
+        <div class="card" style="width: 18rem;">
         <img class="card-img-top" :src="img_url + movie.poster_path" alt="Card image cap">
         <div class="card-body">
             <p class="card-text"> {{ this.movie.title }} </p>
         </div>
     </div>
+    </router-link>
 </template>
 
 <script>
