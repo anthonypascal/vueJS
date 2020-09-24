@@ -30,12 +30,12 @@
 		},
 
 		mounted() {
-			this.$store.dispatch("api/getGenre");
+			this.$store.dispatch("api/getGenreList");
 		},
 
 		methods: {
 			searchByGenre() {
-				this.$store.dispatch("api/getMovieByGenre")
+				this.$store.dispatch("api/getMovieListByGenre")
 			}
 		}
 	}

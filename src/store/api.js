@@ -20,7 +20,7 @@ export default ({
   },
 
   actions: {
-    getGenre({commit, state}) {
+    getGenreList({commit, state}) {
       axios.get(state.api_url + 'genre/movie/list?api_key=' + movieDB_api_key)
           .then(response =>
           {
@@ -34,7 +34,7 @@ export default ({
           )
     },
 
-    getMovieByGenre({commit, state}) {
+    getMovieListByGenre({commit, state}) {
       var list_id = []
       for(var i = 0; i < state.list_genre.length; i++) {
           if (state.list_genre[i].check) {
