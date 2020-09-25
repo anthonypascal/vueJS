@@ -20,6 +20,11 @@ export default ({
     },
 
     actions: {
+        addIsFavouritedToList({state}) {
+            state.list_favourite.forEach((movie) => {
+                movie.isFavourited = true;
+            })
+        },
         addOrRemoveToList ({commit, dispatch, state}, movie) {
             var wasADelete = false;
             state.list_favourite.forEach((movieInStorage, index) => {
@@ -40,9 +45,10 @@ export default ({
             localStorage.setItem('list_favourite', json_list);
         },
 
-        getStorage({commit}) {
+        getStorage({commit, dispatch}) {
             if (localStorage.getItem('list_favourite') !== 'undefined') {
                 commit('setList', JSON.parse(localStorage.getItem('list_favourite')));
+                dispatch('addIsFavouritedToList');
             }
 
         },

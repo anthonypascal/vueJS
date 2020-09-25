@@ -11,7 +11,7 @@
 	  	<input class="form-control" type="text" placeholder="Search" aria-label="Search">
 	</div>
 	<div>
-		<CardMovie v-for="(movie, index) in result_search_by_genre_sorted" :key="index" :movie="movie"></CardMovie>
+		<CardMovie v-for="(movie, index) in result_search_by_genre_sorted" :key="index" :movie="movie" :needMissingGenre="true"></CardMovie>
 	</div>
 </div>
 </template>
@@ -38,7 +38,6 @@
 
 		mounted() {
 			this.$store.dispatch("api/getGenreList");
-			this.$store.dispatch('favourite/getStorage');
 		},
 
 		methods: {
