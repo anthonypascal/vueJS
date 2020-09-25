@@ -5,7 +5,10 @@
 	<p> {{this.movie.release_date }} </p>
 	<br />
 	<p style="font-style: italic; font-size: 15pt"> {{ this.movie.overview }}</p>
-	<p style="text-align: -webkit-center"><a class="button"><span class="heart"></span></a></p>
+	<p style="text-align: -webkit-center">
+		<a @click="changeFavourites" v-bind:class="buttonClass">
+		<span class="heart"></span></a>
+	</p>
 	<br />
 </div>
 
@@ -19,12 +22,34 @@ export default {
 	name: 'MovieDetail',
 	props: [ 'movie' ],
 
-    computed: {
-    ...mapState({
-        img_url: state => state.api.img_url,
-    }),
-},
+	data(){
+		return {
+			buttonClass: "button",
+		}
+	},
 
+    computed: {
+    	...mapState({
+        	img_url: state => state.api.img_url,
+    	}),
+	},
+
+	created() {
+		if (this.movie.isFavourited) {
+			this.buttonClass = "button_lover";
+		}
+	},
+
+	methods: {
+		changeFavourites() {
+			if (this.buttonClass === "button") {
+				this.buttonClass = "button_lover";
+			} else {
+				this.buttonClass = "button"
+			}
+			this.$store.dispatch('favourite/addOrRemoveToList', this.movie);
+		}
+	}
 }
 
 </script>
@@ -68,6 +93,24 @@ body {
   background: var(--pink);
   box-shadow: var(--dark-pink) 0 5px 0 0;
   transform: translateY(10px);
+}
+
+.button_lover {
+	width: var(--button-width);
+	height: var(--button-height);
+	border-radius: 15px;
+	background: var(--light-grey);
+	border: 0;
+	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: 0.2s ease-in;
+	margin-top: 20px;
+
+	background: var(--pink);
+	box-shadow: var(--dark-pink) 0 5px 0 0;
+	transform: translateY(10px);
 }
 
 .heart {

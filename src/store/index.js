@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 import api from './api.js'
+import favourite from './favourite.js'
 
 Vue.use(Vuex)
 
@@ -22,7 +22,8 @@ export default new Vuex.Store({
   },
 
   modules: {
-  	api,
+  	api: api,
+    favourite: favourite
   }
 
 })

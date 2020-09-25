@@ -2,8 +2,9 @@
   <div id="app" class="container">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/searchmovie">SearchMovie</router-link>
+      <router-link to="/searchmovie">Search Movie</router-link> |
+      <router-link to="/favourites">Saved Movies</router-link> |
+      <router-link to="/about">About</router-link>
     </div>
     <router-view/>
   </div>

@@ -28,7 +28,12 @@ const routes = [
     name: 'MovieDetail',
     component: () => import(/* webpackChunkName: "about" */ '../views/MovieDetail.vue'),
     props: true
-}
+  },
+  {
+    path: '/favourites',
+    name: 'Favourites',
+    component: () => import(/* webpackChunkName: "about" */ '../views/FavouritesList.vue'),
+  }
 ]
 
 const router = new VueRouter({

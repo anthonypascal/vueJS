@@ -28,7 +28,8 @@
 		computed: {
 			...mapState({
 				list_genre: state => state.api.list_genre,
-				result_search_by_genre: state => state.api.result_search_by_genre
+				result_search_by_genre: state => state.api.result_search_by_genre,
+				list_favourite: state => state.favourite.list_favourite,
 			}),
 			result_search_by_genre_sorted: function() {
 				return this.sortByGenreNumber(this.result_search_by_genre)
@@ -37,6 +38,7 @@
 
 		mounted() {
 			this.$store.dispatch("api/getGenreList");
+			this.$store.dispatch('favourite/getStorage');
 		},
 
 		methods: {
@@ -53,12 +55,18 @@
 				list.forEach((movie, i) => {
 					movie.countMatchingId = 0;
 					movie.notInGenreIds = [];
+					movie.IsFavourited = false;
 					listSelectedGenre.forEach((id, i) => {
 						if (movie.genre_ids.includes(id)) {
 							movie.countMatchingId++;
 						} else {
 							movie.notInGenreIds.push(id);
 							movie.notInGenreIds = this.matchIds(movie.notInGenreIds);
+						}
+					})
+					this.list_favourite.forEach((favourite, index) => {
+						if (movie.id === favourite.id) {
+							movie.isFavourited = true;
 						}
 					})
 				})
