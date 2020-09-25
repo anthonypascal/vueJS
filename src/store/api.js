@@ -10,7 +10,8 @@ export default ({
     movieDB_api_key: movieDB_api_key,
     list_genre: [],
     result_search_by_genre: [],
-    clicked_movie: {}
+    clicked_movie: {},
+    result_search_by_key: []
   },
 
   mutations: {
@@ -21,6 +22,12 @@ export default ({
   },
 
   actions: {
+
+    getMovieByKey({commit, state}, query_search) {
+     axios.get(state.api_url + 'search/movie?api_key=' + movieDB_api_key + '&query=' + query_search)
+          .then(response => {state.result_search_by_key = response.data.results})
+    },
+
     getGenreList({commit, state}) {
       axios.get(state.api_url + 'genre/movie/list?api_key=' + movieDB_api_key)
           .then(response =>

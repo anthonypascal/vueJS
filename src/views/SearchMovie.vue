@@ -8,10 +8,11 @@
 		<button @click="searchByGenre">Apply filter</button>
 	</div>
 	<div class="md-form active-cyan active-cyan-2 mb-3 ml-4">
-	  	<input class="form-control" type="text" placeholder="Search" aria-label="Search">
+	  	<input v-model='query' @keyup.enter="searchByKey(query)" class="form-control" type="text" placeholder="Search" aria-label="Search">
 	</div>
 	<div>
 		<CardMovie v-for="(movie, index) in result_search_by_genre_sorted" :key="index" :movie="movie"></CardMovie>
+		<CardMovie v-for="(movie, index) in result_search_by_key" :key="index" :movie="movie"></CardMovie>
 	</div>
 </div>
 </template>
@@ -25,11 +26,18 @@
 			CardMovie
 		},
 
+		data() {
+			return {
+				query: '',
+			}
+		},
+
 		computed: {
 			...mapState({
 				list_genre: state => state.api.list_genre,
 				result_search_by_genre: state => state.api.result_search_by_genre,
 				list_favourite: state => state.favourite.list_favourite,
+				result_search_by_key: state => state.api.result_search_by_key
 			}),
 			result_search_by_genre_sorted: function() {
 				return this.sortByGenreNumber(this.result_search_by_genre)
@@ -42,6 +50,10 @@
 		},
 
 		methods: {
+
+			searchByKey(query) {
+				this.$store.dispatch("api/getMovieByKey", query)
+			},
 
 			searchByGenre() {
 				this.$store.dispatch("api/getMovieListByGenre")
@@ -64,11 +76,13 @@
 							movie.notInGenreIds = this.matchIds(movie.notInGenreIds);
 						}
 					})
+					if (this.list_favourite) {
 					this.list_favourite.forEach((favourite, index) => {
 						if (movie.id === favourite.id) {
 							movie.isFavourited = true;
 						}
 					})
+					}
 				})
 				list.sort( (a, b) => {
 					if (a.countMatchingId < b.countMatchingId) {
