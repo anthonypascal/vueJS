@@ -10,47 +10,57 @@
 		<span class="heart"></span></a>
 	</p>
 	<br />
+	<br />
+	<br />
+	<br />
+	<h2>Films similaires:</h2>
+	<CardMovie v-for="(movie, index) in this.similar_movie" :key="index" :movie="movie" :needMissingGenre="false">
+
+	</CardMovie>
 </div>
 
 </template>
 
 <script>
+	import CardMovie from "@/components/CardMovie"
+	import { mapState } from 'vuex'
 
-import { mapState } from 'vuex'
+	export default {
+		name: 'MovieDetail',
+		components: {CardMovie},
+		props: [ 'movie' ],
 
-export default {
-	name: 'MovieDetail',
-	props: [ 'movie' ],
-
-	data(){
-		return {
-			buttonClass: "button",
-		}
-	},
-
-    computed: {
-    	...mapState({
-        	img_url: state => state.api.img_url,
-    	}),
-	},
-
-	created() {
-		if (this.movie.isFavourited) {
-			this.buttonClass = "button_lover";
-		}
-	},
-
-	methods: {
-		changeFavourites() {
-			if (this.buttonClass === "button") {
-				this.buttonClass = "button_lover";
-			} else {
-				this.buttonClass = "button"
+		data(){
+			return {
+				buttonClass: "button",
 			}
-			this.$store.dispatch('favourite/addOrRemoveToList', this.movie);
+		},
+
+		computed: {
+			...mapState({
+				img_url: state => state.api.img_url,
+				similar_movie : state => state.api.similar_movie
+			}),
+		},
+
+		created() {
+			if (this.movie.isFavourited) {
+				this.buttonClass = "button_lover";
+			}
+			this.$store.dispatch('api/getSimilarMovieList', this.movie.id)
+		},
+
+		methods: {
+			changeFavourites() {
+				if (this.buttonClass === "button") {
+					this.buttonClass = "button_lover";
+				} else {
+					this.buttonClass = "button"
+				}
+				this.$store.dispatch('favourite/addOrRemoveToList', this.movie);
+			}
 		}
 	}
-}
 
 </script>
 
