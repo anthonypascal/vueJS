@@ -10,7 +10,7 @@
 	<div class="md-form active-cyan active-cyan-2 mb-3 ml-4">
 	  	<input v-model='query' @keyup.enter="searchByKey(query)" class="form-control" type="text" placeholder="Search" aria-label="Search">
 	</div>
-	<div>
+	<div class="row">
 		<CardMovie v-for="(movie, index) in result_search_by_genre_sorted" :key="index" :movie="movie" :needMissingGenre="true"></CardMovie>
 		<CardMovie v-for="(movie, index) in result_search_by_key" :key="index" :movie="movie"></CardMovie>
 	</div>

@@ -14,9 +14,12 @@
 	<br />
 	<br />
 	<h2>Films similaires:</h2>
-	<CardMovie v-for="(movie, index) in this.similar_movie" :key="index" :movie="movie" :needMissingGenre="false">
+	<div class="row">
+		<CardMovie v-for="(movie, index) in this.similar_movie" :key="index" :movie="movie" :needMissingGenre="false">
+		</CardMovie>
+	</div>
 
-	</CardMovie>
+
 </div>
 
 </template>

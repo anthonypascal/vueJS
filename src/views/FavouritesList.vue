@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="row">
         <CardMovie v-for="(movie, index) in this.list_favourite" :key="index" :movie="movie" :needMissingGenre="false"></CardMovie>
     </div>
 </template>
